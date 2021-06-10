@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +16,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
@@ -28,7 +32,6 @@ import javax.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
-
 
 @Component
 @Entity
@@ -89,6 +92,12 @@ public class Cliente {
 	@OneToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
 	private Cuenta cuenta;
 	
+	@ManyToMany
+	@JoinTable(name = "cliente_beneficios",
+	joinColumns=@JoinColumn(name="cli_id"),
+	inverseJoinColumns=@JoinColumn(name="ben_id"))
+	private List<Beneficio> beneficios = new ArrayList<Beneficio>();
+	
 	public Cliente() {
 	 
 	}
@@ -109,7 +118,7 @@ public class Cliente {
 	 */
 	public Cliente(Long id, String tipoDocumento, int nroDocumento, String nombreApellido, String email,
 			String password, LocalDate fechaNacimiento, int codigoAreaTelefono, int nroTelefono,
-			LocalDate fechaUltimaCompra, Cuenta cuenta) {
+			LocalDate fechaUltimaCompra, Cuenta cuenta,List<Beneficio> beneficios) {
 		super();
 		this.id = id;
 		this.tipoDocumento = tipoDocumento;
@@ -122,6 +131,7 @@ public class Cliente {
 		this.nroTelefono = nroTelefono;
 		this.fechaUltimaCompra = fechaUltimaCompra;
 		this.cuenta = cuenta;
+		this.beneficios= beneficios;
 	}
 
 
