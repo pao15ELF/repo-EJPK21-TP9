@@ -23,13 +23,28 @@ public class Beneficio {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ben_id")
 	private Long id;
-	@Column(name = "ben_desc")
-	private int dctoJubilados;
+	@Column(name = "ben_descripcion")
+	private String descripcion;
 
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "beneficios")
 	private List<Cliente> clientes = new ArrayList<Cliente>();
 
+	public Beneficio() {
+		super();
+	}
+	
+	/**
+	 * @param id
+	 * @param descripcion
+	 * @param clientes
+	 */
+	public Beneficio(Long id, String descripcion, List<Cliente> clientes) {
+		super();
+		this.id = id;
+		this.descripcion = descripcion;
+		this.clientes = clientes;
+	}
 
 	public Long getId() {
 		return id;
@@ -38,17 +53,22 @@ public class Beneficio {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	
 
-
-	public int getDctoJubilados() {
-		return dctoJubilados;
+	/**
+	 * @return the descripcion
+	 */
+	public String getDescripcion() {
+		return descripcion;
 	}
 
-
-	public void setDctoJubilados(int dctoJubilados) {
-		this.dctoJubilados = dctoJubilados;
+	/**
+	 * @param descripcion the descripcion to set
+	 */
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
-
 
 	public List<Cliente> getClientes() {
 		return clientes;
@@ -59,24 +79,13 @@ public class Beneficio {
 		this.clientes = clientes;
 	}
 
-
-	public Beneficio(Long id, int dctoJubilados, List<Cliente> clientes) {
-		super();
-		this.id = id;
-		this.dctoJubilados = dctoJubilados;
-		this.clientes = clientes;
-	}
-
-
-	public Beneficio() {
-		super();
-	}
-
-
 	@Override
 	public String toString() {
-		return "Beneficio [id=" + id + ", dctoJubilados=" + dctoJubilados + ", clientes=" + clientes + "]";
+		return "Beneficio [id=" + id + ", descripcion=" + descripcion + ", clientes=" + clientes + "]";
 	}
+
+	
+	
 }
 
 	

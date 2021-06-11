@@ -293,6 +293,23 @@ public class Cliente {
 			this.cuenta = cuenta;
 		}
 
+		
+		
+		/**
+		 * @return the beneficios
+		 */
+		public List<Beneficio> getBeneficios() {
+			return beneficios;
+		}
+
+
+		/**
+		 * @param beneficios the beneficios to set
+		 */
+		public void setBeneficios(List<Beneficio> beneficios) {
+			this.beneficios = beneficios;
+		}
+
 
 		@Override
 		public String toString() {

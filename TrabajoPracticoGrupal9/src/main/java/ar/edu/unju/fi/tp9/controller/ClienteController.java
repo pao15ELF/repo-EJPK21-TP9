@@ -1,6 +1,5 @@
 package ar.edu.unju.fi.tp9.controller;
 
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -16,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unju.fi.tp9.model.Beneficio;
+import ar.edu.unju.fi.tp9.service.IBeneficioService;
 import ar.edu.unju.fi.tp9.controller.ClienteController;
 import ar.edu.unju.fi.tp9.model.Cliente;
 import ar.edu.unju.fi.tp9.service.IClienteService;
@@ -29,6 +30,17 @@ public class ClienteController {
 	@Qualifier("clienteServiceMysql")
 	private IClienteService clienteService;
 	
+	@Autowired
+	@Qualifier("beneficioServiceSimple")
+	private IBeneficioService beneficioService;
+	
+	@Autowired
+	@Qualifier("beneficioServiceMysql")
+	private IBeneficioService beneficioServiceMysql;
+	
+	@Autowired
+	private Beneficio beneficio;
+	
 	
 	@GetMapping("/cliente/nuevo")
 	public ModelAndView getNuevoClientePage() {
@@ -39,6 +51,9 @@ public class ClienteController {
 		
 		ModelAndView mav = new ModelAndView("nuevocliente");
 		mav.addObject("cliente",clienteService.generarCliente());
+		mav.addObject("Beneficio",beneficio );
+		mav.addObject("beneficiosEncontrados", beneficioService.obtenerListaBeneficios());
+		
 		return mav;
 	}
 	
@@ -53,8 +68,12 @@ public class ClienteController {
 		if(resultadoValidacion.hasErrors()) {
 			mav = new ModelAndView("nuevocliente");
 			mav.addObject("cliente", unCliente);
+			mav.addObject("Beneficio",beneficio );
+			mav.addObject("beneficiosEncontrados", beneficioService.obtenerListaBeneficios());
+		
 		}else {
 			mav = new ModelAndView("clientes");
+			unCliente.setBeneficios(beneficioService.obtenerListaBeneficios());
 			clienteService.agregarCliente(unCliente);
 			mav.addObject("clientes", clienteService.obtenerListaClientes());
 		}
@@ -81,8 +100,11 @@ public class ClienteController {
 		LOGGER.info("RESULT: muestra la pagina clientes.html con los datos del cliente a editar. ");
 		
 		ModelAndView modelView = new ModelAndView("nuevoCliente");
-		Optional<Cliente> cliente = clienteService.obtenerClientePorId(id);
+		Cliente cliente = clienteService.obtenerClientePorId(id).get();
 		modelView.addObject("cliente",cliente);
+		modelView.addObject("Beneficio",beneficio );
+		modelView.addObject("beneficiosEncontrados", beneficioService.obtenerListaBeneficios());
+		
 		return modelView;
 	}
 	
@@ -97,6 +119,42 @@ public class ClienteController {
 		ModelAndView modelView = new ModelAndView("clientes");
 		modelView.addObject("clientes", clienteService.obtenerListaClientes());
 		return modelView ;
+	}
+	
+	@GetMapping("/beneficio/buscar")
+	public ModelAndView getBuscarBeneficiosPorDescripcion(@ModelAttribute("Beneficio") Beneficio unBeneficio) {
+	
+		ModelAndView mav =new ModelAndView("nuevocliente");
+		Beneficio beneficioEncontrado;
+		try {
+			beneficioEncontrado = beneficioServiceMysql.buscarPorId(unBeneficio.getId()).get();
+		}catch(Exception e) {
+			beneficioEncontrado=null;
+		}
+		String mensajeError = "";
+		if (beneficioEncontrado != null)
+			beneficioService.guardarBeneficio(beneficioEncontrado);
+		else {
+			mensajeError = "El beneficio no existe";
+			mav.addObject("mensajeError", mensajeError);
+		}
+		mav.addObject("cliente",clienteService.generarCliente());
+		mav.addObject("Beneficio",beneficio );
+		mav.addObject("beneficiosEncontrados", beneficioService.obtenerListaBeneficios());
+		return mav;
+		
+	}
+
+	@GetMapping("/beneficio/quitar/{id}")
+	public ModelAndView quitarBeneficios(@PathVariable(name="id")Long id) {
+		ModelAndView mav= new ModelAndView("nuevocliente");
+		beneficioService.quitarBeneficioLista(id);
+		mav.addObject("cliente",clienteService.generarCliente());
+		mav.addObject("Beneficio",beneficio );
+		mav.addObject("beneficiosEncontrados", beneficioService.obtenerListaBeneficios());
+		
+		return mav;
+		
 	}
 	
 }
