@@ -18,33 +18,36 @@
 						<table class="table">
 							<thead class="thead-dark"> 
 								<tr> 
-									<th > Tipo Doc.</th>
+									<th> ID Cliente </th>
 									<th> Nº. Doc.</th>
 									<th> Apellido Nombre </th>
 									<th> Email </th>
-									<th> Fecha de Nac. </th>
 									<th> Ultima Compra</th>
 									<th> Edad </th>
 									<th> Teléfono </th>
-									<th> T.D. Cumpleaños</th>
-									<th> T.D. Fecha Nac.</th>
-									<th> T.D. Ultima Compra</th>
+									
+									<th> Beneficios </th>
+									
 									<th> Acciones </th>
 				 				</tr>
 							</thead>
 							<tbody>
 								<tr th:each="c:${clientes}">
-									<td th:text="${c.tipoDocumento}"> </td>
+								
+									<td th:text="${c.id}"> </td>
 									<td th:text="${c.nroDocumento}"> </td>
 									<td	th:text="${#strings.toUpperCase(c.nombreApellido)}"> </td>
 									<td th:text="${c.email}"> </td>
-									<td th:text="${#temporals.format(c.fechaNacimiento, 'dd/MM/yyyy')}"> </td>
 									<td th:text="${#temporals.format(c.fechaUltimaCompra, 'dd/MM/yyyy')}"> </td>
 									<td th:text="${c.getEdad}"> </td>
 									<td th:text="${c.codigoAreaTelefono} + '-' + ${c.nroTelefono}"> </td>
-									<td th:text="${c.getTiempoHastaCumple}"> </td>
-									<td th:text="${c.getTTransDesdeFechaN}"> </td>
-									<td th:text="${c.getTTransDesdeUltCompra}"> </td>
+									
+									<td> 
+										<span th:each="b:${c.beneficios}">
+											<a th:text="${b.descripcion}"></a>
+										</span>
+									</td>
+									
 									<td> 
 										<a th:href="@{/cliente/editar/}+${c.id}" class= "btn btn-warning" >EDITAR</a>
 										<br><br>
