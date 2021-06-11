@@ -11,6 +11,8 @@ public class TrabajoPracticoGrupal9Application {
 		//GRUPO: EJPK21	
 		//Karen Daiana Flores - USUARIO: KarenDay
 		//Paola Fernanda Flores - USUARIO: pao15ELF
+		//Ezequiel Estrada - USUARIO: choqooz
+		//Juan Baysse - USUARIO JuanBaysse
 	}
 
 }
