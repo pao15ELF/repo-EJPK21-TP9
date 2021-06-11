@@ -10,143 +10,199 @@
 		<header th:replace="/layouts/header :: header"> </header>
 		<!-- Container -->
 		<div class="container">
-			<div class="row col-sm-10 col-md">
-				<div class="col-sm-10 col-md">
-					<!-- Formulario -->				
-					<h1>Cargar de datos del cliente</h1>
-					<hr>
-					<form action="/cliente/guardar" th:object="${cliente}" method="post">
-						<!-- Id del cliente oculto -->
-						<input type = "hidden" th:field="*{id}"/>
+			
+				<div class="row col-sm-12 col-md">
+					<div class="col-sm-10 col-md">
+						<!-- Formulario -->				
 						
-						<!-- Id de la cuenta del cliente oculto -->
-						<input type = "hidden" th:field="*{cuenta.id}"/>
-						
-						<!-- Tipo de Documento -->
-						<label>Tipo de Documento</label>
-						<select th:field="*{tipoDocumento}" class="form-control">
-							<option value="" selected>Seleccione</option> 
-							<option value="DNI">DNI</option> 
-							<option value="PASAPORTE">PASAPORTE</option> 
-						</select>	
-						<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('tipoDocumento')}" th:errors="*{tipoDocumento}"></div>
-						<!-- offset para dejar un margen izq de 2 columnas para alinear el texto  -->
-										
-						<!-- Fin Tipo de Documento -->
-	
-						<!-- Numero de dni -->
-						<div class="form-group">
-							    <label for="dni">Número de DNI</label>
-							    <input type="number" class="form-control" id="dni" th:field="*{nroDocumento}" placeholder="Ingrese su DNI">
-						</div>
-						
-						<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('nroDocumento')}" th:errors="*{nroDocumento}"></div>
-					
-						<!-- Fin numero de dni -->
-						
-						<!-- Nombre y apellido -->
-						<div class="form-group">
-							    <label for="nya">Nombre y Apellido</label>
-							    <input type="text" class="form-control" id="nya" th:field="*{nombreApellido}" placeholder="Ingrese su Nombre y Apellido">
-						</div>
-						<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('nombreApellido')}" th:errors="*{nombreApellido}"></div>
-						
-						<!-- Fin nombre y apellido -->
-						
-						<!-- Email -->
-						<div class="form-group">
-							    <label for="email">Email</label>
-							    <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Ingrese su email">
-						</div>	
-						<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-						
-						<!-- Fin Email -->
-						
-						<!-- Contraseña -->
-						<div class="form-group">
-							    <label for="password">Password</label>
-							    <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Ingrese su password">
-						</div>	
-						<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-						
-						<!-- Fin contraseña -->
-						
-						<!-- Fec nacimiento -->
-						<div class="form-group">
-							    <label for="fechanac">Fecha de Nacimiento</label>
-							    <input type="date" class="form-control" id="fechanac" th:field="*{fechaNacimiento}" placeholder="Ingrese su fecha de nacimiento">
-						</div>	
-						<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}"></div>
-						
-						<!-- Fin fec de nacimiento -->
-						
-						<!-- Codigo de area -->
-						<div class="form-group">
-							    <label for="codarea">Código de Area</label>
-							    <input type="number" class="form-control" id="codarea" th:field="*{codigoAreaTelefono}" >
-						</div>
-						<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('codigoAreaTelefono')}" th:errors="*{codigoAreaTelefono}"></div>
-						
-						<!-- Fin codigo de area -->
-						
-						<!-- Nro de telefono -->
-						<div class="form-group">
-							    <label for="telefono">Número de Telefono (sin el 15)</label>
-							    <input type="number" class="form-control" id="telefono" th:field="*{nroTelefono}" placeholder="Ingrese su numero de telefono">
-						</div>
-						<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('nroTelefono')}" th:errors="*{nroTelefono}"></div>
-					
-						<!-- Fin nro de telefono -->
-						
-						<!-- ultima compra -->
-						<div class="form-group">
-							    <label for="fechaultcomp">Fecha de Ultima Compra</label>
-							    <input type="date" class="form-control" id="fechaultcomp" th:field="*{fechaUltimaCompra}">
-						</div>
-						<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('fechaUltimaCompra')}" th:errors="*{fechaUltimaCompra}"></div>
-					
-						<!-- fin ultima compra -->
-						
-						<!-- DATOS DE LA CUENTA -->
-							<!-- Saldo de la cuenta -->
-							<h3>DATOS DE LA CUENTA</h3>
-							<hr>
-							<br>
-							<div class="form-group">
-								    <label for="cantSaldo">Saldo</label>
-								    <input type="number" class="form-control" id="cantSaldo" th:field="*{cuenta.saldo}" placeholder="Ingrese saldo de la cuenta">
-							</div>
-							<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('cuenta.saldo')}" th:errors="*{cuenta.saldo}"></div>
-					        
-							<!-- Fin Saldo de la cuenta  -->
-							
-							<!-- Fecha de creación -->
-							<div class="form-group">
-								    <label for="fecCreacion">Fecha de Creación</label>
-								    <input type= "date" class="form-control" id="fecCreacion" th:field="*{cuenta.fechaCreacion}" placeholder="Ingrese fecha de creacion">
-							</div>
-							<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('cuenta.fechaCreacion')}" th:errors="*{cuenta.fechaCreacion}"></div>
-						
-							<!-- Fin fecha de creación  -->
-							
-							<!-- Seleccionar estado de la cuenta -->
-								<label>Estado</label>
-								<select th:field="*{cuenta.estado}" class="form-control">
-									<option value="" selected>Seleccione</option> 
-									<option value="activa">ACTIVA</option> 
-									<option value="inactiva">INACTIVA</option> 
-								</select>
-								<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('cuenta.estado')}" th:errors="*{cuenta.estado}"></div>
-						
-							<!-- Fin Seleccionar -->
-						<!-- FIN DATOS DE LA CUENTA -->
+						<!-- Beneficios -->
+						<h3> Busqueda de Beneficios</h3>
+						<!--  <div class="col-md-8 justify-content-left">
+							<form th:action="@{/beneficio/buscar}" th:object="${Beneficio}" method="get">	
+								<div >
+									<label for="benefDescrip">Ingrese identificador del Beneficio</label>
+									<input type="number" class="form-control" id="benefDescrip" th:field="*{id}" placeholder="Ingrese id">
+									<button type="submit" class="btn btn-primary">Buscar</button>
+								</div>
+			
+								<br><br>			
+								<div class="form-text text-danger col-sm-10 offset-2" th:if="${mensajeError}" th:text="${mensajeError}"></div>
+							</form>	
+						</div>-->
+						<form class="form-inline" th:action="@{/beneficio/buscar}" th:object="${Beneficio}" method="get" >
+						  <div class="form-group mx-sm-3 mb-2">
+						    <label for="benefDescrip" class="sr-only"> Identificador de Beneficio </label>
+						    <input type="number" class="form-control" id="benefDescrip" th:field="*{id}" placeholder="Ingrese id del beneficio">
+						  </div>
+						  <button type="submit" class="btn btn-primary mb-2"> Buscar </button>
+						  			
+						  <div class="form-text text-danger col-sm-10 " th:if="${mensajeError}" th:text="${mensajeError}"></div>
+						</form>	
+						<!-- Fin de Beneficios -->
+						<!-- Tabla de beneficios seleccionados para un cliente -->
 						<br><br>
-						<button type="submit" class="btn btn-primary">Enviar</button>
-					</form>
+						<h3 class="text-center"> Beneficios para el cliente</h3>
+						<hr>
+						<div class="text-center">
+							<div class="table-responsive">
+								<table class="table">
+									<thead class="thead-dark"> 
+										<tr> 
+											  <th scope="col"> ID </th>
+										      <th scope="col"> Descripcion </th>
+										      <th scope="col"> Acciones </th>
+						 				</tr>
+									</thead>
+									<tbody>
+										 <tr th:each="beneficio : ${beneficiosEncontrados}">
+											    <td align="center" th:text="${beneficio.id}"></td>
+												<td align="center" th:text="${beneficio.descripcion}"></td>
+											    <td> 
+													<a th:href="@{/beneficio/quitar/}+${beneficio.id}" class= "btn btn-warning" >QUITAR</a>
+												</td>						
+										 </tr>
+									</tbody>
+								</table>
+							</div>	
+						</div>
+						<br><br>
+						<h1 class="text-center">Cargar de datos del cliente</h1>
+						<hr>
+						<form action="/cliente/guardar" th:object="${cliente}" method="post">
+							<!-- Id del cliente oculto -->
+							<input type = "hidden" th:field="*{id}"/>
+							
+							<!-- Id de la cuenta del cliente oculto -->
+							<input type = "hidden" th:field="*{cuenta.id}"/>
+							
+							<!-- Tipo de Documento -->
+							<label>Tipo de Documento</label>
+							<select th:field="*{tipoDocumento}" class="form-control">
+								<option value="" selected>Seleccione</option> 
+								<option value="DNI">DNI</option> 
+								<option value="PASAPORTE">PASAPORTE</option> 
+							</select>	
+							<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('tipoDocumento')}" th:errors="*{tipoDocumento}"></div>
+							<!-- offset para dejar un margen izq de 2 columnas para alinear el texto  -->
+											
+							<!-- Fin Tipo de Documento -->
+		
+							<!-- Numero de dni -->
+							<div class="form-group">
+								    <label for="dni">Número de DNI</label>
+								    <input type="number" class="form-control" id="dni" th:field="*{nroDocumento}" placeholder="Ingrese su DNI">
+							</div>
+							
+							<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('nroDocumento')}" th:errors="*{nroDocumento}"></div>
+						
+							<!-- Fin numero de dni -->
+							
+							<!-- Nombre y apellido -->
+							<div class="form-group">
+								    <label for="nya">Nombre y Apellido</label>
+								    <input type="text" class="form-control" id="nya" th:field="*{nombreApellido}" placeholder="Ingrese su Nombre y Apellido">
+							</div>
+							<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('nombreApellido')}" th:errors="*{nombreApellido}"></div>
+							
+							<!-- Fin nombre y apellido -->
+							
+							<!-- Email -->
+							<div class="form-group">
+								    <label for="email">Email</label>
+								    <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Ingrese su email">
+							</div>	
+							<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+							
+							<!-- Fin Email -->
+							
+							<!-- Contraseña -->
+							<div class="form-group">
+								    <label for="password">Password</label>
+								    <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Ingrese su password">
+							</div>	
+							<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+							
+							<!-- Fin contraseña -->
+							
+							<!-- Fec nacimiento -->
+							<div class="form-group">
+								    <label for="fechanac">Fecha de Nacimiento</label>
+								    <input type="date" class="form-control" id="fechanac" th:field="*{fechaNacimiento}" placeholder="Ingrese su fecha de nacimiento">
+							</div>	
+							<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('fechaNacimiento')}" th:errors="*{fechaNacimiento}"></div>
+							
+							<!-- Fin fec de nacimiento -->
+							
+							<!-- Codigo de area -->
+							<div class="form-group">
+								    <label for="codarea">Código de Area</label>
+								    <input type="number" class="form-control" id="codarea" th:field="*{codigoAreaTelefono}" >
+							</div>
+							<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('codigoAreaTelefono')}" th:errors="*{codigoAreaTelefono}"></div>
+							
+							<!-- Fin codigo de area -->
+							
+							<!-- Nro de telefono -->
+							<div class="form-group">
+								    <label for="telefono">Número de Telefono (sin el 15)</label>
+								    <input type="number" class="form-control" id="telefono" th:field="*{nroTelefono}" placeholder="Ingrese su numero de telefono">
+							</div>
+							<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('nroTelefono')}" th:errors="*{nroTelefono}"></div>
+						
+							<!-- Fin nro de telefono -->
+							
+							<!-- ultima compra -->
+							<div class="form-group">
+								    <label for="fechaultcomp">Fecha de Ultima Compra</label>
+								    <input type="date" class="form-control" id="fechaultcomp" th:field="*{fechaUltimaCompra}">
+							</div>
+							<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('fechaUltimaCompra')}" th:errors="*{fechaUltimaCompra}"></div>
+						
+							<!-- fin ultima compra -->
+							
+							<!-- DATOS DE LA CUENTA -->
+								<!-- Saldo de la cuenta -->
+								<h3>DATOS DE LA CUENTA</h3>
+								<hr>
+								<br>
+								<div class="form-group">
+									    <label for="cantSaldo">Saldo</label>
+									    <input type="number" class="form-control" id="cantSaldo" th:field="*{cuenta.saldo}" placeholder="Ingrese saldo de la cuenta">
+								</div>
+								<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('cuenta.saldo')}" th:errors="*{cuenta.saldo}"></div>
+						        
+								<!-- Fin Saldo de la cuenta  -->
+								
+								<!-- Fecha de creación -->
+								<div class="form-group">
+									    <label for="fecCreacion">Fecha de Creación</label>
+									    <input type= "date" class="form-control" id="fecCreacion" th:field="*{cuenta.fechaCreacion}" placeholder="Ingrese fecha de creacion">
+								</div>
+								<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('cuenta.fechaCreacion')}" th:errors="*{cuenta.fechaCreacion}"></div>
+							
+								<!-- Fin fecha de creación  -->
+								
+								<!-- Seleccionar estado de la cuenta -->
+									<label>Estado</label>
+									<select th:field="*{cuenta.estado}" class="form-control">
+										<option value="" selected>Seleccione</option> 
+										<option value="activa">ACTIVA</option> 
+										<option value="inactiva">INACTIVA</option> 
+									</select>
+									<div class="form-text text-danger col-sm-10 offset-2" th:if="${#fields.hasErrors('cuenta.estado')}" th:errors="*{cuenta.estado}"></div>
+							
+								<!-- Fin Seleccionar -->
+							<!-- FIN DATOS DE LA CUENTA -->
+							<br><br>
+							<button type="submit" class="btn btn-primary">Enviar</button>
+						</form>
+						
+					</div>
 					
+						<aside th:replace="/layouts/publicidad :: aside"> </aside>		
+										
 				</div>
-			<aside th:replace="/layouts/publicidad :: aside"> </aside>
-		</div>
+		
 	</div>
 	<!-- Fin Container -->
 	<footer th:replace="/layouts/footer :: footer"> </footer>
